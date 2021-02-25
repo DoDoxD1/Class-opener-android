@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +25,12 @@ public class MainActivity extends AppCompatActivity {
         //refrences
         TextView display = findViewById(R.id.dispplay);
         Button joinButton = findViewById(R.id.join);
+        Button allClassButton = findViewById(R.id.open);
+        Spinner spinner = findViewById(R.id.spinner);
+
+        String[] arraySpinner = new String[]{"Computer Workshop", "Communication", "Communication Lab", "Maths/Calculus", "IOT", "BEEE", "BEEE Lab", "Mentoring", "C++", "C++ Lab", "Physics", "Physics Lab", "Maths/Calculus(19)"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
         //current time and day
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
@@ -30,28 +38,39 @@ public class MainActivity extends AppCompatActivity {
         int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         String classNow = "Null";
 
-        switch (day){
+        //seting values to spinner
+
+        spinner.setAdapter(adapter);
+
+        allClassButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                joinClass(spinner.getSelectedItem().toString());
+            }
+        });
+
+        switch (day) {
             case 1:
                 display.setText("Lol! bro today is sunday.");
                 break;
             case 2:
-                classNow = monday(hour,min);
+                classNow = monday(hour, min);
                 display.setText(classNow);
                 break;
             case 3:
-                classNow = tuesday(hour,min);
+                classNow = tuesday(hour, min);
                 display.setText(classNow);
                 break;
             case 4:
-                classNow = wednesday(hour,min);
+                classNow = wednesday(hour, min);
                 display.setText(classNow);
                 break;
             case 5:
-                classNow = thursday(hour,min);
+                classNow = thursday(hour, min);
                 display.setText(classNow);
                 break;
             case 6:
-                classNow = friday(hour,min);
+                classNow = friday(hour, min);
                 display.setText(classNow);
                 break;
             case 7:
@@ -66,68 +85,73 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String activeClass = display.getText().toString();
                 joinClass(activeClass);
+
             }
 
-            private void joinClass(String activeClass) {
-                if (activeClass.equals("Computer Workshop")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15591_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("Communication")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_16923_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("Communication Lab")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_16776_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("Maths/Calculus")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17254_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("IOT")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15901_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("BEEE")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_16210_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("Maths/Calculus")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17254_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("BEEE Lab")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_16147_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("Mentoring")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17913_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("C++")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15736_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("C++ Lab")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15441_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("Physics")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17522_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else if(activeClass.equals("Physics Lab")){
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17429_1/outline"));
-                    startActivity(browserIntent);
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),"Error!, Can't join class at the moment",Toast.LENGTH_SHORT).show();
-                }
-            }
+
         });
-
     }
+        private void joinClass(String activeClass) {
+        if (activeClass.equals("Computer Workshop")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15591_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("Communication")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_16923_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("Communication Lab")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_16776_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("Maths/Calculus")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17254_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("IOT")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15901_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("BEEE")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_16210_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("Maths/Calculus")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17254_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("BEEE Lab")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_16147_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("Mentoring")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17913_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("C++")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15736_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("C++ Lab")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15441_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("Physics")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17522_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("Physics Lab")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17429_1/outline"));
+            startActivity(browserIntent);
+        }
+        else if(activeClass.equals("Maths/Calculus(19)")){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_17253_1/outline"));
+            startActivity(browserIntent);
+        }
+        else{
+            Toast.makeText(getApplicationContext(),"Error!, Can't join class at the moment",Toast.LENGTH_SHORT).show();
+        }
+        }
 
     private String monday(int hour, int min) {
         if (hour == 9)
@@ -197,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 return "It's lunch Bro!";
         else if (hour == 14)
             if (min>30)
-                return "Maths/Calculus";
+                return "Maths/Calculus(19)";
             else
                 return "BEEE";
         else if (hour == 15)
@@ -266,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
             else
                 return "BEEE";
         else if (hour == 12)
-            if (min>45)
+            if (min>30)
                 return "Communication";
             else
                 return "It's lunch Bro!";
@@ -279,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
             if (min>30)
                 return "C++ Lab";
             else
-                return "Maths/Calculus";
+                return "Maths/Calculus(19)";
         else if (hour == 15)
             if (min>30)
                 return "C++ Lab";
