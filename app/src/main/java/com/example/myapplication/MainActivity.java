@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         TextView display = findViewById(R.id.dispplay);
         Button joinButton = findViewById(R.id.join);
         Button allClassButton = findViewById(R.id.open);
+        Button TtButton = findViewById(R.id.tt);
         Spinner spinner = findViewById(R.id.spinner);
 
         String[] arraySpinner = new String[]{"Computer Workshop", "Communication", "Communication Lab", "Maths/Calculus", "IOT", "BEEE", "BEEE Lab", "Mentoring", "C++", "C++ Lab", "Physics", "Physics Lab", "Maths/Calculus(19)"};
@@ -90,7 +91,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         });
+
+        TtButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openTT();
+
+            }
+        });
     }
+        private void openTT(){
+            startActivity(new Intent(this,TimeTable.class));
+        }
+
         private void joinClass(String activeClass) {
         if (activeClass.equals("Computer Workshop")){
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://cuchd.blackboard.com/ultra/courses/_15591_1/outline"));
